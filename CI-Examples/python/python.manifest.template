@@ -29,6 +29,8 @@ fs.mounts = [
   { path = "/etc/hosts", uri = "file:helper-files/hosts" },
 
   { type = "tmpfs", path = "/tmp" },
+
+  { type = "encrypted", path = "/output/", uri = "file:output", key_name = "_sgx_mrenclave" },
 ]
 
 sys.stack.size = "2M"

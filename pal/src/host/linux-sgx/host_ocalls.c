@@ -116,6 +116,7 @@ static long sgx_ocall_cpuid(void* args) {
 
 static long sgx_ocall_open(void* args) {
     struct ocall_open* ocall_open_args = args;
+    //printf("host: in sgx_ocall_open %s\n", ocall_open_args->pathname);
     return DO_SYSCALL_INTERRUPTIBLE(open, ocall_open_args->pathname, ocall_open_args->flags,
                                     ocall_open_args->mode);
 }
@@ -134,18 +135,21 @@ static long sgx_ocall_read(void* args) {
 
 static long sgx_ocall_write(void* args) {
     struct ocall_write* ocall_write_args = args;
+    //printf("host: in sgx_ocall_write %d\n", ocall_write_args->count);
     return DO_SYSCALL_INTERRUPTIBLE(write, ocall_write_args->fd, ocall_write_args->buf,
                                     ocall_write_args->count);
 }
 
 static long sgx_ocall_pread(void* args) {
     struct ocall_pread* ocall_pread_args = args;
+    printf("host: in sgx_ocall_pread offset=%d count=%d\n", ocall_pread_args->offset, ocall_pread_args->count);    
     return DO_SYSCALL_INTERRUPTIBLE(pread64, ocall_pread_args->fd, ocall_pread_args->buf,
                                     ocall_pread_args->count, ocall_pread_args->offset);
 }
 
 static long sgx_ocall_pwrite(void* args) {
     struct ocall_pwrite* ocall_pwrite_args = args;
+    printf("host: in sgx_ocall_pwrite offset=%d count=%d\n", ocall_pwrite_args->offset, ocall_pwrite_args->count);    
     return DO_SYSCALL_INTERRUPTIBLE(pwrite64, ocall_pwrite_args->fd, ocall_pwrite_args->buf,
                                     ocall_pwrite_args->count, ocall_pwrite_args->offset);
 }
